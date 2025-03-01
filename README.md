@@ -1,137 +1,120 @@
 # FavFilmes 🎬
 
-Uma aplicação web para buscar, favoritar e gerenciar filmes usando a API do OMDB. Desenvolvido com Django, PostgreSQL e Docker.
+Aplicação web para buscar, favoritar e gerenciar filmes usando a API do OMDB. Desenvolvido com Django e PostgreSQL.
 
-## Funcionalidades Principais 🔍
-
-### 1. Busca de Filmes
-- Pesquise filmes pelo título usando dados em tempo real da API OMDB
-- Visualize detalhes como diretor, ano, sinopse e nota IMDB
-- Interface responsiva com cards para cada resultado
-
-### 2. Sistema de Favoritos
-- Adicione filmes à sua lista pessoal
-- Atribua notas de 0 a 10 para cada filme favoritado
-- Edite ou remova favoritos facilmente
-
-### 3. Autenticação de Usuário
-- Sistema seguro de login/logout
-- Listas de favoritos individuais por usuário
-- Proteção contra CSRF e SQL injection
-
-### 4. Gestão de Dados
-- Armazenamento em banco de dados PostgreSQL
-- CRUD completo para filmes e favoritos
-- Validação de dados em formulários
-
-## Tecnologias Utilizadas 🛠️
-
-**Backend**
-- Python 3.13.2
-- Django 5.1
-- Django REST Framework
-- PostgreSQL
-- Docker
-
-**Frontend**
-- HTML5 semântico
-- CSS customizado
-- Sistema de templates Django
-- Design responsivo
+## Funcionalidades ✨
+- 🔍 Busca de filmes em tempo real
+- ❤️ Sistema de favoritos pessoais
+- ⭐ Atribuição de notas aos filmes
+- 👤 Autenticação de usuários
+- 📊 Gestão de dados com PostgreSQL
 
 ## Pré-requisitos 📋
+- Python 3.9+
+- PostgreSQL 15+
+- Git
+- Chave da API OMDB ([obtenha gratuitamente](https://www.omdbapi.com/apikey.aspx))
 
-- Docker 20.10+
-- Docker Compose 2.20+
-- Chave de API OMDB (gratuita)
+## Instalação Passo a Passo 🚀
 
-## Instalação Local 🚀
-
-1. **Clone o repositório**
+### 1. Clone o repositório
 ```bash
 git clone https://github.com/seu-usuario/favfilmes.git
 cd favfilmes
 
-    Configure as variáveis de ambiente
-
+2. Crie um ambiente virtual
 bash
 Copy
 
-cp .env.example .env
-# Edite o .env com suas credenciais
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# ou venv\Scripts\activate  # Windows
 
-    Inicie os containers
-
+3. Instale as dependências
 bash
 Copy
 
-docker-compose up -d --build
+pip install -r requirements.txt
 
-    Execute as migrações
+4. Configure o banco de dados
 
+    Crie um banco PostgreSQL:
+
+sql
+Copy
+
+CREATE DATABASE favfilmesDB;
+CREATE USER victo WITH PASSWORD 'sua_senha_segura';
+GRANT ALL PRIVILEGES ON DATABASE favfilmesDB TO victo;
+
+5. Configure as variáveis de ambiente
+
+Crie um arquivo .env na raiz do projeto:
+ini
+Copy
+
+OMDB_API_KEY=sua_chave_omdb
+DATABASE_URL=postgres://victo:sua_senha_segura@localhost:5432/favfilmesDB
+
+6. Aplique as migrações
 bash
 Copy
 
-docker-compose exec web python manage.py migrate
+python manage.py migrate
 
-    Crie um superusuário
-
+7. Crie um usuário admin
 bash
 Copy
 
-docker-compose exec web python manage.py createsuperuser
+python manage.py createsuperuser
 
-    Acesse a aplicação
-
+8. Inicie o servidor
+bash
 Copy
 
-http://localhost:8000
+python manage.py runserver
 
-Guia de Uso 📖
-Página Inicial
+Acesse: http://localhost:8000
+Como Usar 🖱️
+Login
 
-    Buscar Filmes: Inicie novas pesquisas
+    Acesse /accounts/login/
 
-    Favoritos: Acesse sua lista pessoal
+    Use as credenciais do superusuário criado
 
-    Login/Logout: Gerencie sua sessão
+Buscar Filmes
 
-Home
-Pesquisa de Filmes
+    Na página inicial, clique em "Buscar Filme"
 
-    Digite o título do filme
+    Digite o título desejado
 
-    Clique em "Buscar"
+    Veja os resultados da pesquisa
 
-    Visualize os resultados
+Busca
+Adicionar Favoritos
 
-Adicionar Favorito
+    Nos resultados da busca:
 
-    Na lista de resultados:
-
-    Defina sua nota (opcional)
+    Insira uma nota (opcional)
 
     Clique em "Favoritar"
 
 Gerenciar Favoritos
 
-    Editar Nota: Atualize sua avaliação
+    Editar: Altere sua nota
 
     Remover: Exclua da lista
 
-    Ordenação: Automática por data de adição
+    Visualizar: Veja todos em "Meus Favoritos"
 
-Favoritos
 Estrutura do Projeto 📂
 Copy
 
 favfilmes/
-├── fav_filmes/          # App principal
+├── fav_filmes/          # Aplicação principal
 │   ├── templates/       # Telas da aplicação
-│   ├── models.py        # Definição de modelos
+│   ├── models.py        # Modelos de dados
 │   ├── views.py         # Lógica das páginas
-│   └── serializers.py   # API REST
-│
 ├── projeto/             # Configurações Django
-├── docker-compose.yml   # Orquestração de containers
-└── requirements.txt     # Dependências Python
+├── requirements.txt     # Dependências
+└── .env.example         # Modelo de variáveis de ambiente
