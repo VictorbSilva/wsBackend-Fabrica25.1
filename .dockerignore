@@ -1,0 +1,10 @@
+# Arquivo: .dockerignore
+.env
+*.sqlite3
+*.pyc
+__pycache__
+/venv
+.git
+.gitignore
+Dockerfile
+docker-compose.yml

@@ -7,7 +7,7 @@ import requests
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'fav_filmes/index.html')
 
 def login_usuario(request):
     mensagem = None
@@ -36,10 +36,10 @@ def buscar_filme(request):
             dados = resposta.json()
             
             if dados['Response'] == 'True':
-                return render(request, 'resultados_busca.html', {'filmes': dados['Search'], 'titulo_filme': titulo_filme})
+                return render(request, 'fav_filmes/resultados_busca.html', {'filmes': dados['Search'], 'titulo_filme': titulo_filme})
             else:
-                return render(request, 'buscar_filme.html', {'mensagem': 'Filme não encontrado'})
-    return render(request, 'buscar_filme.html', {'filmes': filmes, 'mensagem': mensagem})
+                return render(request, 'fav_filmes/buscar_filme.html', {'mensagem': 'Filme não encontrado'})
+    return render(request, 'fav_filmes/buscar_filme.html', {'filmes': filmes, 'mensagem': mensagem})
 
 @login_required
 def adicionar_favorito(request):
@@ -101,7 +101,7 @@ def adicionar_favorito(request):
 @login_required
 def exibir_favoritos(request):
     favoritos = FavoritoModel.objects.filter(usuario=request.user)
-    return render(request, 'lista_favoritos.html', {'favoritos': favoritos})
+    return render(request, 'fav_filmes/lista_favoritos.html', {'favoritos': favoritos})
 
 @login_required
 def remover_favorito(request, pk):
@@ -117,5 +117,5 @@ def editar_favorito(request, pk):
             favorito.nota_usuario = nota
             favorito.save()
         return redirect('filmes:exibir_favoritos')
-    return render(request, 'editar_favorito.html', {'favorito': favorito})
+    return render(request, 'fav_filmes/editar_favorito.html', {'favorito': favorito})
 # Create your views here.

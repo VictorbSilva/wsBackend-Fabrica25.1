@@ -1,6 +1,10 @@
 
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +50,9 @@ ROOT_URLCONF = 'projeto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, '/templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,14 +74,13 @@ WSGI_APPLICATION = 'projeto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'favfilmesDB',
-        'USER': 'victo',
-        'PASSWORD': 'favfilmes',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB', 'favfilmesDB'), 
+        'USER': os.getenv('POSTGRES_USER', 'victo'),          
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'favfilmes'), 
+        'HOST': os.getenv('POSTGRES_HOST', 'db'), 
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
