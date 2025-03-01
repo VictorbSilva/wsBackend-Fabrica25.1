@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FavFilmes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'fav_filmes/styles.css' %}">
+</head>
+<body>
+    <div class = "container">
+        FavFilmes: Busque e salve seus filmes favoritos!
+        <div class="content">
+            <a class="busca-filme" href="{% url 'filmes:buscar_filme' %}">Buscar Filme</a>
+            <a class="lista-favoritos" href="{% url 'filmes:exibir_favoritos' %}">Favoritos</a>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="section-container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </section>
+</body>
+</html>
