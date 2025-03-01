@@ -1,0 +1,33 @@
+{% extends 'index.html '%}
+
+{% block content %}
+    <h1>Resultados para "{{titulo_filme}}"</h1>
+
+    {% if erro %}
+        <div class="notification error">{{ erro }}</div>
+    {% endif %}
+
+    {% if filmes %} 
+        <div class="lista-busca">
+            {% for filme in filmes %}
+                <div class="filme-card">
+                    <h2>{{filme.Title}}</h2>
+                    <p>{{filme.Year}} | {{filme.Director}}</p>
+                    <p>{{filme.Plot}}</p>
+                    
+                    <form method="post" action="{% url 'filmes:adicionar_favorito' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="id_imdb" value="{{ filme.imdbID }}">
+                        <div class="form-group">
+                            <label>Nota (0-10)</label>
+                            <input type="number" name="nota" step="0.1" min="0" max="10">
+                        </div>
+                        <button class="btn" type="submit">Favoritar</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="notification warning">Nenhum filme encontrado.</div>
+    {% endif %}
+{% endblock %}
